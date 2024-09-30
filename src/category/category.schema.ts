@@ -7,10 +7,10 @@ export class Category {
     @Prop({ unique: true, required: true })
     id: string;
 
-    @Prop({required: true })
+    @Prop({ unique: true, required: true })
     title: string;
 
-    @Prop({required: true, type: [String] })
+    @Prop({ required: false, type: [String], default: []})
     points: string[];
 }
 
