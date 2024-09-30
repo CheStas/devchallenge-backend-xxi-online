@@ -1,7 +1,9 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { connection } from 'mongoose';
 import { Call, CallSchema } from './call/call.schema';
 import { Category, CategorySchema } from './category/category.schema';
+import { BucketService } from './file/bucket.service';
 import { CallRepository } from './call/call.repository';
 import { CallController } from './call/call.controller';
 import { CategoryController } from './category/category.controller';
@@ -27,6 +29,14 @@ const { DATABASE_URI = '', BUCKET_NAME = 'files' } = process.env;
   providers: [
     CallRepository,
     CategoryRepository,
+    {
+      provide: BucketService,
+      useFactory: () => {
+        return new BucketService(connection.db, {
+          bucketName: BUCKET_NAME,
+       });
+      }
+    }
   ],
 })
 export class AppModule {}
