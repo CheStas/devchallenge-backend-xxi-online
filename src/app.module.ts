@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
-import { connection } from 'mongoose';
+import { getConnectionToken, MongooseModule } from '@nestjs/mongoose';
+import { Connection } from 'mongoose';
 import { Call, CallSchema } from './call/call.schema';
 import { Category, CategorySchema } from './category/category.schema';
 import { BucketService } from './file/bucket.service';
@@ -31,7 +31,8 @@ const { DATABASE_URI = '', BUCKET_NAME = 'files' } = process.env;
     CategoryRepository,
     {
       provide: BucketService,
-      useFactory: () => {
+      inject: [getConnectionToken()],
+      useFactory: async ( connection: Connection) => {
         return new BucketService(connection.db, {
           bucketName: BUCKET_NAME,
        });
