@@ -1,5 +1,6 @@
 import { Logger, Module } from '@nestjs/common';
 import { getConnectionToken, MongooseModule } from '@nestjs/mongoose';
+import { HttpModule } from '@nestjs/axios';
 import { Connection } from 'mongoose';
 import { Call, CallSchema } from './call/call.schema';
 import { Category, CategorySchema } from './category/category.schema';
@@ -14,6 +15,7 @@ const { DATABASE_URI = '', BUCKET_NAME = 'files' } = process.env;
 
 @Module({
   imports: [
+    HttpModule,
     MongooseModule.forRoot(DATABASE_URI),
     MongooseModule.forFeature([
       {
