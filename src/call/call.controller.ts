@@ -3,6 +3,7 @@ import { Response } from 'express';
 import { Call } from './call.schema';
 import { CallService } from './call.service';
 import { CreateCallDto } from './call.dto';
+import { IsValidFileAudiUrlPipe } from './isValidFileAudioUrl.pipe';
 
 @Controller('call')
 export class CallController {
@@ -30,7 +31,7 @@ export class CallController {
     }
 
     @Post()
-    async create(@Body() call: CreateCallDto): Promise<Call> {
+    async create(@Body(new IsValidFileAudiUrlPipe()) call: CreateCallDto): Promise<Call> {
         return this.callService.create(call);
     }
 }
