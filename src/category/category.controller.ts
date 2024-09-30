@@ -2,7 +2,7 @@ import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common'
 import { CategoryRepository } from './category.repository';
 import { Category } from './category.schema';
 
-@Controller('categories')
+@Controller('category')
 export class CategoryController {
     constructor(private readonly categoryRepository: CategoryRepository) {}
 

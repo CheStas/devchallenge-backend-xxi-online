@@ -2,7 +2,7 @@ import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common'
 import { CallRepository } from './call.repository';
 import { Call } from './call.schema';
 
-@Controller('calls')
+@Controller('call')
 export class CallController {
     constructor(private readonly callRepository: CallRepository) {}
 
