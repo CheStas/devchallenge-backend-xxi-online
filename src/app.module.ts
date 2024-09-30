@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { getConnectionToken, MongooseModule } from '@nestjs/mongoose';
 import { Connection } from 'mongoose';
 import { Call, CallSchema } from './call/call.schema';
@@ -8,6 +8,7 @@ import { CallRepository } from './call/call.repository';
 import { CallController } from './call/call.controller';
 import { CategoryController } from './category/category.controller';
 import { CategoryRepository } from './category/category.repository';
+import { CallService } from './call/call.service';
 
 const { DATABASE_URI = '', BUCKET_NAME = 'files' } = process.env;
 
@@ -27,6 +28,11 @@ const { DATABASE_URI = '', BUCKET_NAME = 'files' } = process.env;
   ],
   controllers: [CallController, CategoryController],
   providers: [
+    {
+      provide: Logger,
+      useValue: new Logger('AppCallModule'),
+    },
+    CallService,
     CallRepository,
     CategoryRepository,
     {
