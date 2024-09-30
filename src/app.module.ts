@@ -1,8 +1,11 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Call, CallSchema } from './call/call.schema';
-import { CallController } from './call/call.controller';
+import { Category, CategorySchema } from './category/category.schema';
 import { CallRepository } from './call/call.repository';
+import { CallController } from './call/call.controller';
+import { CategoryController } from './category/category.controller';
+import { CategoryRepository } from './category/category.repository';
 
 const { DATABASE_URI = '', BUCKET_NAME = 'files' } = process.env;
 
@@ -13,12 +16,17 @@ const { DATABASE_URI = '', BUCKET_NAME = 'files' } = process.env;
       {
         name: Call.name,
         schema: CallSchema,
-      }
+      },
+      {
+        name: Category.name,
+        schema: CategorySchema,
+      },
     ]),
   ],
-  controllers: [CallController],
+  controllers: [CallController, CategoryController],
   providers: [
     CallRepository,
+    CategoryRepository,
   ],
 })
 export class AppModule {}
