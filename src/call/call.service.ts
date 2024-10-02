@@ -19,7 +19,7 @@ export class CallService {
         const result = await this.callRepository.getById(id);
  
         if (!result) {
-            throw new NotFoundException('Call not found');
+            throw new NotFoundException('Unknown call id');
         }
 
         return {
@@ -32,8 +32,7 @@ export class CallService {
         }
     }
 
-    async create(call: CreateCallDto): Promise<Call> {
-        this.logger.log('Creating a new call', { call });
+    async create(call: CreateCallDto): Promise<{ id: string }> {
         const uuid = uuidv4();
         const result = await this.callRepository.create({
             id: uuid,

@@ -10,7 +10,7 @@ export class CallController {
     constructor(private readonly callService: CallService) {}
 
     @Get(':id')
-    async findOne(@Param('id') id: string, @Res() response: Response): Promise<Call | { id: string; message: string }> {
+    async findOne(@Param('id') id: string, @Res() response: Response): Promise<Call | { id: string; message: string; status: string; }> {
         const result = await this.callService.getById(id);
         if (result.isCompleted) {
             response.status(200).send({
@@ -24,6 +24,7 @@ export class CallController {
         } else {
             response.status(202).send({
                 id: result.id,
+                status: 'in progress',
                 message: 'processing is not yet complete'
             });
             return;
@@ -31,7 +32,7 @@ export class CallController {
     }
 
     @Post()
-    async create(@Body(new IsValidFileAudiUrlPipe()) call: CreateCallDto): Promise<Call> {
+    async create(@Body(new IsValidFileAudiUrlPipe()) call: CreateCallDto): Promise<{ id: string }> {
         return this.callService.create(call);
     }
 }
