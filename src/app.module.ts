@@ -15,7 +15,7 @@ import { CategoryController } from './category/category.controller';
 import { CategoryRepository } from './category/category.repository';
 import { CallService } from './call/call.service';
 import { FileService } from './file/file.service';
-import { commands } from './queue';
+import { commands } from './queue/command';
 import { OrchestrationService } from './queue/orchestration.service';
 import { TranscribeProcessor } from './transcribe/transcribe.processor';
 

@@ -1,6 +1,6 @@
 import { InjectQueue } from '@nestjs/bullmq';
 import { Injectable, Logger } from '@nestjs/common';
-import { commands } from '.';
+import { commands } from './command';
 import { Queue } from 'bullmq';
 
 @Injectable()
