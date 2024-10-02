@@ -16,6 +16,8 @@ import { CategoryRepository } from './category/category.repository';
 import { CallService } from './call/call.service';
 import { FileService } from './file/file.service';
 import { commands } from './queue';
+import { OrchestrationService } from './queue/orchestration.service';
+import { TranscribeProcessor } from './transcribe/transcribe.processor';
 
 const {
   DATABASE_URI = '',
@@ -60,6 +62,8 @@ const {
       provide: Logger,
       useValue: new Logger('AppCallModule'),
     },
+    OrchestrationService,
+    TranscribeProcessor,
     FileService,
     CallService,
     CallRepository,
