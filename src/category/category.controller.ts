@@ -9,13 +9,13 @@ import {
   UnprocessableEntityException,
   NotFoundException,
 } from '@nestjs/common';
-import { CategoryRepository } from './category.repository';
+import { CategoryService } from './category.service';
 import { Category } from './category.schema';
 import { CreateCategoryDto, UpdateCategoryDto } from './category.dto';
 
 @Controller('category')
 export class CategoryController {
-  constructor(private readonly categoryRepository: CategoryRepository) {}
+  constructor(private readonly categoryRepository: CategoryService) {}
 
   @Get()
   async getAll(): Promise<Category[]> {

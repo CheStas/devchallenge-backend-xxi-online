@@ -13,6 +13,7 @@ import { CallRepository } from './call/call.repository';
 import { CallController } from './call/call.controller';
 import { CategoryController } from './category/category.controller';
 import { CategoryRepository } from './category/category.repository';
+import { CategoryService } from './category/category.service';
 import { CallService } from './call/call.service';
 import { FileService } from './file/file.service';
 import { commands } from './queue/command';
@@ -83,6 +84,7 @@ const {
     CallService,
     CallRepository,
     CategoryRepository,
+    CategoryService,
     {
       provide: BucketService,
       inject: [getConnectionToken()],

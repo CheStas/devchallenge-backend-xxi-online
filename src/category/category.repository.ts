@@ -16,30 +16,18 @@ export class CategoryRepository {
   }
 
   async getAll(): Promise<Category[]> {
-    const result = await this.categoryModel.find().exec();
-
-    return result.map((category) => ({
-      id: category.id,
-      title: category.title,
-      points: category.points,
-    }));
+    return this.categoryModel.find().exec();
   }
 
   async create(categoryData: CreateCategoryDto): Promise<Category> {
-    const uuid = uuidv4();
     const newCategory = new this.categoryModel({
-      id: uuid,
-      title: categoryData.title.trim(),
+      id: categoryData.id || uuidv4(),
+      title: categoryData.title,
       points: categoryData.points,
     });
 
     try {
-      const result = await newCategory.save();
-      return {
-        id: result.id,
-        title: result.title,
-        points: result.points,
-      };
+      return newCategory.save();
     } catch (e) {
       if (e.code === 11000) {
         // MongoDB duplicate key error code
@@ -57,7 +45,7 @@ export class CategoryRepository {
     updateData: UpdateCategoryDto,
   ): Promise<Category | null> {
     try {
-      const result = await this.categoryModel
+      return this.categoryModel
         .findOneAndUpdate(
           { id },
           {
@@ -67,16 +55,6 @@ export class CategoryRepository {
           { new: true },
         )
         .exec();
-
-      if (!result) {
-        return null;
-      }
-
-      return {
-        id: result.id,
-        title: result.title,
-        points: result.points,
-      };
     } catch (e) {
       if (e.code === 11000) {
         // MongoDB duplicate key error code
@@ -90,20 +68,10 @@ export class CategoryRepository {
   }
 
   async delete(id: string): Promise<Category | null> {
-    const result = await this.categoryModel
+    return this.categoryModel
       .findOneAndDelete({
         id: id,
       })
       .exec();
-
-    if (!result) {
-      return null;
-    }
-
-    return {
-      id: result.id,
-      title: result.title,
-      points: result.points,
-    };
   }
 }
