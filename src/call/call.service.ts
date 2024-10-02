@@ -4,12 +4,14 @@ import { CallRepository } from './call.repository';
 import { CreateCallDto } from './call.dto';
 import { Call } from './call.schema';
 import { FileService } from 'src/file/file.service';
+import { OrchestrationService } from 'src/queue/orchestration.service';
 
 @Injectable()
 export class CallService {
   constructor(
     private readonly callRepository: CallRepository,
     private readonly fileService: FileService,
+    private readonly orchestrationService: OrchestrationService,
     private readonly logger: Logger,
   ) {}
 
@@ -58,6 +60,10 @@ export class CallService {
       id: uuid,
       fileId: saveFileResult.fileId,
       url: call.audio_url,
+    });
+
+    await this.orchestrationService.emitCallUploadedEvent({
+      callId: result.id,
     });
 
     const createdCall = {
