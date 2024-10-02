@@ -3,8 +3,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { CallRepository } from './call.repository';
 import { CreateCallDto } from './call.dto';
 import { Call } from './call.schema';
-import { FileService } from 'src/file/file.service';
-import { OrchestrationService } from 'src/queue/orchestration.service';
+import { FileService } from '../file/file.service';
+import { OrchestrationService } from '../queue/orchestration.service';
 
 @Injectable()
 export class CallService {

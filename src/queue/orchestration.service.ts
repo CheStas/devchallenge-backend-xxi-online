@@ -23,10 +23,14 @@ export class OrchestrationService {
   }
 
   async emitCallTranscribedEvent({ callId }: { callId: string }) {
-    this.logger.log(`File Transcribed, sending text to Classify, Tokenize, Category Classify Queues  ${callId}`);
+    this.logger.log(
+      `File Transcribed, sending text to Classify, Tokenize, Category Classify Queues  ${callId}`,
+    );
     await this.classifyQueue.add(commands.CLASSIFY_TEXT, { callId });
     await this.tokenizeQueue.add(commands.TOKENIZE_TEXT, { callId });
-    await this.categoryClassifyQueue.add(commands.CATEGORY_CLASSIFY_TEXT, { callId });
+    await this.categoryClassifyQueue.add(commands.CATEGORY_CLASSIFY_TEXT, {
+      callId,
+    });
   }
 
   async emitTextTokenizedEvent({ callId }: { callId: string }) {

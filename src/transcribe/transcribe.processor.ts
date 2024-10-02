@@ -2,13 +2,13 @@ import { HttpService } from '@nestjs/axios';
 import { AxiosError } from 'axios';
 import { Injectable, Logger } from '@nestjs/common';
 import { catchError, firstValueFrom } from 'rxjs';
-import { FileService } from 'src/file/file.service';
+import { FileService } from '../file/file.service';
 import { blob } from 'stream/consumers';
 import { Processor, WorkerHost } from '@nestjs/bullmq';
 import { Job } from 'bullmq';
-import { commands } from 'src/queue';
-import { OrchestrationService } from 'src/queue/orchestration.service';
-import { CallService } from 'src/call/call.service';
+import { commands } from '../queue/command';
+import { OrchestrationService } from '../queue/orchestration.service';
+import { CallService } from '../call/call.service';
 
 const { WHISPER_URL = '' } = process.env;
 

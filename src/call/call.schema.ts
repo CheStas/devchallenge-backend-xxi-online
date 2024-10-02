@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { mongo, Types } from 'mongoose';
-import { Category } from 'src/category/category.schema';
+import { Category } from '../category/category.schema';
 
 @Schema({ timestamps: true })
 export class Call {
