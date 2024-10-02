@@ -79,4 +79,8 @@ export class CallService {
 
     return { id: result.id };
   }
+
+  async update(id: string, updateData: Partial<Call>): Promise<Call | null> {
+    return this.callRepository.update(id, updateData);
+  }
 }
