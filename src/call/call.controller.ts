@@ -13,7 +13,7 @@ export class CallController {
   async findOne(
     @Param('id') id: string,
     @Res() response: Response,
-  ): Promise<Call | { id: string; message: string; status: string }> {
+  ): Promise<Call | (Partial<Call> & { message: string; status: string })> {
     const result = await this.callService.getById(id);
     if (result.isCompleted) {
       response.status(200).send({
@@ -29,6 +29,10 @@ export class CallController {
         id: result.id,
         status: 'in progress',
         message: 'processing is not yet complete',
+        name: result.name,
+        location: result.location,
+        emotional_tone: result.emotional_tone,
+        text: result.text,
       });
       return;
     }
