@@ -36,12 +36,27 @@ const {
       },
     }),
     BullModule.registerQueue({ name: commands.TRANSCRIBE_CALL }),
+    BullModule.registerQueue({ name: commands.CLASSIFY_TEXT }),
+    BullModule.registerQueue({ name: commands.TOKENIZE_TEXT }),
+    BullModule.registerQueue({ name: commands.CATEGORY_CLASSIFY_TEXT }),
     BullBoardModule.forRoot({
       route: '/admin/queues',
       adapter: ExpressAdapter,
     }),
     BullBoardModule.forFeature({
       name: commands.TRANSCRIBE_CALL,
+      adapter: BullMQAdapter,
+    }),
+    BullBoardModule.forFeature({
+      name: commands.CLASSIFY_TEXT,
+      adapter: BullMQAdapter,
+    }),
+    BullBoardModule.forFeature({
+      name: commands.TOKENIZE_TEXT,
+      adapter: BullMQAdapter,
+    }),
+    BullBoardModule.forFeature({
+      name: commands.CATEGORY_CLASSIFY_TEXT,
       adapter: BullMQAdapter,
     }),
     MongooseModule.forRoot(DATABASE_URI),
