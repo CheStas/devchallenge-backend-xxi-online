@@ -2,7 +2,7 @@ import { PipeTransform, Injectable, ArgumentMetadata, UnprocessableEntityExcepti
 import { CreateCallDto } from './call.dto';
 
 const supportedAudioFormats = ['mp3', 'wav'];
-const supportedProtocols = ['http:', 'https:', 'file:'];
+const supportedProtocols = ['http:', 'https:'];
 
 @Injectable()
 export class IsValidFileAudiUrlPipe implements PipeTransform<CreateCallDto, CreateCallDto> {
@@ -15,11 +15,11 @@ export class IsValidFileAudiUrlPipe implements PipeTransform<CreateCallDto, Crea
         }
 
         if (!supportedProtocols.includes(parsed.protocol)) {
-            throw new UnprocessableEntityException('Protocol is not supported, supported protocols are http, https, file');
+            throw new UnprocessableEntityException(`Protocol is not supported, supported protocols are ${supportedProtocols.join(', ')}`);
         }
 
         if (!supportedAudioFormats.includes(parsed.pathname.split('.').pop())) {
-            throw new UnprocessableEntityException('File Format is not supported, supported formats are mp3, wav');
+            throw new UnprocessableEntityException(`File Format is not supported, supported formats are ${supportedAudioFormats.join(', ')}`);
         }
 
         return value;
