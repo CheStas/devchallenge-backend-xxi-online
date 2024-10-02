@@ -1,6 +1,10 @@
 import { Logger, Module } from '@nestjs/common';
 import { getConnectionToken, MongooseModule } from '@nestjs/mongoose';
 import { HttpModule } from '@nestjs/axios';
+import { BullModule } from '@nestjs/bullmq';
+import { BullBoardModule } from '@bull-board/nestjs';
+import { ExpressAdapter } from '@bull-board/express';
+import { BullMQAdapter } from '@bull-board/api/bullMQAdapter';
 import { Connection } from 'mongoose';
 import { Call, CallSchema } from './call/call.schema';
 import { Category, CategorySchema } from './category/category.schema';
@@ -11,12 +15,33 @@ import { CategoryController } from './category/category.controller';
 import { CategoryRepository } from './category/category.repository';
 import { CallService } from './call/call.service';
 import { FileService } from './file/file.service';
+import { commands } from './queue';
 
-const { DATABASE_URI = '', BUCKET_NAME = 'files' } = process.env;
+const {
+  DATABASE_URI = '',
+  BUCKET_NAME = 'files',
+  REDIS_HOST = '',
+  REDIS_PORT = '',
+} = process.env;
 
 @Module({
   imports: [
     HttpModule,
+    BullModule.forRoot({
+      connection: {
+        host: REDIS_HOST,
+        port: Number(REDIS_PORT),
+      },
+    }),
+    BullModule.registerQueue({ name: commands.TRANSCRIBE_CALL }),
+    BullBoardModule.forRoot({
+      route: '/admin/queues',
+      adapter: ExpressAdapter,
+    }),
+    BullBoardModule.forFeature({
+      name: commands.TRANSCRIBE_CALL,
+      adapter: BullMQAdapter,
+    }),
     MongooseModule.forRoot(DATABASE_URI),
     MongooseModule.forFeature([
       {
