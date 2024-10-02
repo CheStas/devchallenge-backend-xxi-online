@@ -11,6 +11,7 @@ services:
       DATABASE_URI: 'mongodb://database:27017'
       REDIS_HOST: 'cache'
       REDIS_PORT: '6379'
+      WHISPER_URL: 'http://whisper:9000'
     ports:
       - '8080:8080'
     volumes:
@@ -18,9 +19,11 @@ services:
     depends_on:
       - database
       - cache
+      - whisper
 
   cache:
     image: redis:7.4-alpine
+    container_name: calls-redis
     restart: always
     ports:
       - '6379:6379'
@@ -34,3 +37,15 @@ services:
     restart: always
     volumes:
       - './data:/data/db'
+
+  whisper:
+    image: onerahmet/openai-whisper-asr-webservice:latest
+    container_name: calls-whisper
+    restart: always
+    environment:
+      ASR_MODEL: base.en
+      ASR_ENGINE: openai_whisper
+    ports:
+      - '9000:9000'
+    volumes:
+    - ./whisper:/.cache
