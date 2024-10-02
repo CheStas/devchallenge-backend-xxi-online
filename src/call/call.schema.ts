@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Types } from 'mongoose';
+import { mongo, Types } from 'mongoose';
 import { Category } from 'src/category/category.schema';
 
 
@@ -22,6 +22,12 @@ export class Call {
 
     @Prop({ type: [{ type: Types.ObjectId, ref: 'Category' }] })
     category?: Category[];
+
+    @Prop({ type: mongo.ObjectId, required: true })
+    fileId: mongo.ObjectId;
+
+    @Prop({required: false })
+    url?: string;
 
     // TODO add optional
     // - status
