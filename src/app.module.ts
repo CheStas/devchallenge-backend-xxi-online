@@ -10,6 +10,7 @@ import { CallController } from './call/call.controller';
 import { CategoryController } from './category/category.controller';
 import { CategoryRepository } from './category/category.repository';
 import { CallService } from './call/call.service';
+import { FileService } from './file/file.service';
 
 const { DATABASE_URI = '', BUCKET_NAME = 'files' } = process.env;
 
@@ -34,6 +35,7 @@ const { DATABASE_URI = '', BUCKET_NAME = 'files' } = process.env;
       provide: Logger,
       useValue: new Logger('AppCallModule'),
     },
+    FileService,
     CallService,
     CallRepository,
     CategoryRepository,
