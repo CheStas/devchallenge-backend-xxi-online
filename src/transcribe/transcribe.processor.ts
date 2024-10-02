@@ -56,8 +56,9 @@ export class TranscribeProcessor extends WorkerHost {
         })
         .pipe(
           catchError((error: AxiosError) => {
-            this.logger.error(error.response.data);
-            throw error.response.data;
+            const errorData = error.response?.data || error;
+            this.logger.error(errorData);
+            throw errorData;
           }),
         ),
     );
