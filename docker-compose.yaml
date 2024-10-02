@@ -2,22 +2,35 @@ version: '3.8'
 services:
   app:
     container_name: calls-api
+    restart: always
     build:
       context: ./
       dockerfile: Dockerfile
       target: development
     environment:
       DATABASE_URI: 'mongodb://database:27017'
+      REDIS_HOST: 'cache'
+      REDIS_PORT: '6379'
     ports:
       - '8080:8080'
     volumes:
       - .:/usr/src/app
     depends_on:
       - database
+      - cache
+
+  cache:
+    image: redis:7.4-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server
+    volumes:
+      - ./cache:/data
 
   database:
     image: mongo:7.0
     container_name: calls-mongodb
-    restart: no
+    restart: always
     volumes:
       - './data:/data/db'
