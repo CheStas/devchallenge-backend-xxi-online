@@ -42,12 +42,12 @@ const { DATABASE_URI = '', BUCKET_NAME = 'files' } = process.env;
     {
       provide: BucketService,
       inject: [getConnectionToken()],
-      useFactory: async ( connection: Connection) => {
+      useFactory: async (connection: Connection) => {
         return new BucketService(connection.db, {
           bucketName: BUCKET_NAME,
-       });
-      }
-    }
+        });
+      },
+    },
   ],
 })
 export class AppModule {}

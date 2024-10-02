@@ -13,13 +13,13 @@ export class CreateCategoryDto extends Category {
 }
 
 export class UpdateCategoryDto extends Category {
-    @IsNotEmpty()
-    @IsString()
-    @IsOptional()
-    title: string;
-  
-    @IsArray()
-    @IsOptional()
-    @IsString({ each: true })
-    points: string[];
-  }
+  @IsNotEmpty()
+  @IsString()
+  @IsOptional()
+  title: string;
+
+  @IsArray()
+  @IsOptional()
+  @IsString({ each: true })
+  points: string[];
+}

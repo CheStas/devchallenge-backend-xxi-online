@@ -7,11 +7,13 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: ['debug', 'error', 'log', 'verbose', 'warn'],
   });
-  app.useGlobalPipes(new ValidationPipe({
-    whitelist: true,
-    disableErrorMessages: false,
-    errorHttpStatusCode: 422,
-  }));
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      disableErrorMessages: false,
+      errorHttpStatusCode: 422,
+    }),
+  );
 
   Logger.log(`Starting, PORT:${PORT}`);
 
