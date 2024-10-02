@@ -9,6 +9,12 @@ export class OrchestrationService {
     private readonly logger: Logger,
     @InjectQueue(commands.TRANSCRIBE_CALL)
     private readonly transcribeQueue: Queue,
+    @InjectQueue(commands.CLASSIFY_TEXT)
+    private readonly classifyQueue: Queue,
+    @InjectQueue(commands.TOKENIZE_TEXT)
+    private readonly tokenizeQueue: Queue,
+    @InjectQueue(commands.CATEGORY_CLASSIFY_TEXT)
+    private readonly categoryClassifyQueue: Queue,
   ) {}
 
   async emitCallUploadedEvent({ callId }: { callId: string }) {
@@ -17,7 +23,42 @@ export class OrchestrationService {
   }
 
   async emitCallTranscribedEvent({ callId }: { callId: string }) {
-    this.logger.log(`File Transcribed, sending text to tokenize  ${callId}`);
-    // await this.eventQueue.add(commands.TRANSCRIBE_AUDIO, { fileId });
+    this.logger.log(`File Transcribed, sending text to Classify, Tokenize, Category Classify Queues  ${callId}`);
+    await this.classifyQueue.add(commands.CLASSIFY_TEXT, { callId });
+    await this.tokenizeQueue.add(commands.TOKENIZE_TEXT, { callId });
+    await this.categoryClassifyQueue.add(commands.CATEGORY_CLASSIFY_TEXT, { callId });
+  }
+
+  async emitTextTokenizedEvent({ callId }: { callId: string }) {
+    this.logger.log(`File Tokenized ${callId}`);
+  }
+
+  async emitTextClassifiedEvent({ callId }: { callId: string }) {
+    this.logger.log(`File Classified ${callId}`);
+  }
+
+  async emitTextCategoryClassifiedEvent({ callId }: { callId: string }) {
+    this.logger.log(`Call CategoryClassified ${callId}`);
+  }
+
+  async emitCategoryAddedEvent({ categoryId }: { categoryId: string }) {
+    this.logger.log(`Category Added ${categoryId}`);
+    // Get all calls, for each call
+    // - remove current category (or just set status in progress?)
+    // - emit send CATEGORY_CLASSIFY_TEXT command
+  }
+
+  async emitCategoryUpdatedEvent({ categoryId }: { categoryId: string }) {
+    this.logger.log(`Category Updated ${categoryId}`);
+    // Get all calls, for each call
+    // - remove current category (or just set status in progress?)
+    // - emit send CATEGORY_CLASSIFY_TEXT command
+  }
+
+  async emitCategoryDeletedEvent({ categoryId }: { categoryId: string }) {
+    this.logger.log(`Category Deleted ${categoryId}`);
+    // Get all calls, for each call
+    // - remove current category (or just set status in progress?)
+    // - emit send CATEGORY_CLASSIFY_TEXT command
   }
 }
