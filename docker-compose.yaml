@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   app:
-    container_name: calls-api
+    container_name: 2336_devchalenge_21-api
     restart: always
     build:
       context: ./
@@ -23,7 +23,7 @@ services:
 
   cache:
     image: redis:7.4-alpine
-    container_name: calls-redis
+    container_name: 2336_devchalenge_21-redis
     restart: always
     ports:
       - '6379:6379'
@@ -33,14 +33,14 @@ services:
 
   database:
     image: mongo:7.0
-    container_name: calls-mongodb
+    container_name: 2336_devchalenge_21-mongodb
     restart: always
     volumes:
       - './data:/data/db'
 
   whisper:
     image: onerahmet/openai-whisper-asr-webservice:latest
-    container_name: calls-whisper
+    container_name: 2336_devchalenge_21-whisper
     restart: always
     environment:
       ASR_MODEL: base.en
