@@ -1,17 +1,26 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, OnApplicationBootstrap } from '@nestjs/common';
 import { CategoryRepository } from './category.repository';
 import { OrchestrationService } from '../queue/orchestration.service';
 import { Category } from './category.schema';
 import { CreateCategoryDto, UpdateCategoryDto } from './category.dto';
 import { v4 as uuidv4 } from 'uuid';
+import { categoriesOnInit } from './init.data';
 
 @Injectable()
-export class CategoryService {
+export class CategoryService implements OnApplicationBootstrap {
   constructor(
     private readonly callRepository: CategoryRepository,
     private readonly orchestrationService: OrchestrationService,
     private readonly logger: Logger,
   ) {}
+
+  async onApplicationBootstrap() {
+    this.logger.log('Creating Categories if not exist ');
+    await Promise.all(
+      categoriesOnInit.map((el) => this.callRepository.createIfNotExist(el)),
+    );
+    this.logger.log('Creating Categories if not exist ended');
+  }
 
   async getById(id: string): Promise<Category | null> {
     return this.callRepository.getById(id);
