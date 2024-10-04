@@ -19,6 +19,7 @@ import { FileService } from './file/file.service';
 import { commands } from './queue/command';
 import { OrchestrationService } from './queue/orchestration.service';
 import { TranscribeProcessor } from './transcribe/transcribe.processor';
+import { ClassificationProcessor } from './classify/classify.processor';
 import { TokenClassificationProcessor } from './classify/token.classification.processor';
 import { CategoryUpdateResolverProcessor } from './category/category.update.processor';
 
@@ -87,6 +88,7 @@ const {
     },
     OrchestrationService,
     TranscribeProcessor,
+    ClassificationProcessor,
     TokenClassificationProcessor,
     CategoryUpdateResolverProcessor,
     FileService,
