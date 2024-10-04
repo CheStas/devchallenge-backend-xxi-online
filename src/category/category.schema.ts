@@ -3,6 +3,8 @@ import { Types } from 'mongoose';
 
 @Schema({ timestamps: true })
 export class Category {
+  _id?: Types.ObjectId;
+
   @Prop({ unique: true, required: true })
   id: string;
 
