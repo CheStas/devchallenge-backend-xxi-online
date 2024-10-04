@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { mongo, Types } from 'mongoose';
+import mongoose, { mongo, Types } from 'mongoose';
 import { Category } from '../category/category.schema';
 
 @Schema({ timestamps: true })
@@ -19,8 +19,8 @@ export class Call {
   @Prop({ required: false })
   text?: string;
 
-  @Prop({ type: [{ type: Types.ObjectId, ref: 'Category' }] })
-  category?: Category[];
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Category' }] })
+  categories?: Category[];
 
   @Prop({ type: mongo.ObjectId, required: true })
   fileId: mongo.ObjectId;
