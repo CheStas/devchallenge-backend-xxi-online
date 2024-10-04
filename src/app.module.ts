@@ -19,6 +19,7 @@ import { FileService } from './file/file.service';
 import { commands } from './queue/command';
 import { OrchestrationService } from './queue/orchestration.service';
 import { TranscribeProcessor } from './transcribe/transcribe.processor';
+import { CategoryUpdateResolverProcessor } from './category/category.update.processor';
 
 const {
   DATABASE_URI = '',
@@ -85,6 +86,7 @@ const {
     },
     OrchestrationService,
     TranscribeProcessor,
+    CategoryUpdateResolverProcessor,
     FileService,
     CallService,
     CallRepository,
