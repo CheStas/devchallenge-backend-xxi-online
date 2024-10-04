@@ -16,7 +16,15 @@ export class CallService {
   ) {}
 
   static isCompleted(call: Call): boolean {
-    return !!(call.name && call.location && call.emotional_tone && call.text);
+    return !!(
+      (
+        call.emotional_tone &&
+        call.text &&
+        (call.name || call.name === '') &&
+        (call.location || call.location === '')
+      )
+      // TODO add categories
+    );
   }
 
   async getById(id: string): Promise<Call & { isCompleted: boolean }> {
