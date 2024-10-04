@@ -35,6 +35,7 @@ export class CallService {
       text: result.text,
       fileId: result.fileId,
       url: result.url,
+      categories: result.categories || [],
     };
 
     this.logger.log(`fileResponse: ${JSON.stringify(fileResponse, null, 2)}`);

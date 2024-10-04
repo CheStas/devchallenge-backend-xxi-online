@@ -10,7 +10,7 @@ export class CallRepository {
   ) {}
 
   async getById(id: string): Promise<Call | null> {
-    return this.callModel.findOne({ id }).exec();
+    return await this.callModel.findOne({ id }).populate('categories').exec();
   }
 
   async create(callData: Partial<Call>): Promise<Call> {
@@ -19,8 +19,22 @@ export class CallRepository {
   }
 
   async update(id: string, updateData: Partial<Call>): Promise<Call | null> {
+    const { categories, ...fieldsToUpdate } = updateData;
     return this.callModel
-      .findOneAndUpdate({ id }, updateData, { new: true })
+      .findOneAndUpdate(
+        { id },
+        {
+          ...fieldsToUpdate,
+          ...(categories
+            ? {
+                $set: {
+                  categories: categories.map((category) => category._id),
+                },
+              }
+            : {}),
+        },
+        { new: true },
+      )
       .exec();
   }
 }
