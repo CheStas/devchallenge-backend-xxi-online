@@ -27,7 +27,8 @@ export class CategoryRepository {
     });
 
     try {
-      return newCategory.save();
+      const result = await newCategory.save();
+      return result;
     } catch (e) {
       if (e.code === 11000) {
         // MongoDB duplicate key error code
@@ -40,12 +41,34 @@ export class CategoryRepository {
     }
   }
 
+  async createIfNotExist(
+    categoryData: Partial<CreateCategoryDto>,
+  ): Promise<Category> {
+    try {
+      const category = await this.categoryModel.findOne({
+        title: categoryData.title,
+      });
+
+      if (category) {
+        return category;
+      }
+
+      const result = await this.create({
+        ...(categoryData as CreateCategoryDto),
+        id: uuidv4(),
+      });
+      return result;
+    } catch (e) {
+      console.error('Error in createIfNotExist, Ignoring', e);
+    }
+  }
+
   async update(
     id: string,
     updateData: UpdateCategoryDto,
   ): Promise<Category | null> {
     try {
-      return this.categoryModel
+      const result = await this.categoryModel
         .findOneAndUpdate(
           { id },
           {
@@ -55,6 +78,7 @@ export class CategoryRepository {
           { new: true },
         )
         .exec();
+      return result;
     } catch (e) {
       if (e.code === 11000) {
         // MongoDB duplicate key error code
