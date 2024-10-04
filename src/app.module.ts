@@ -21,6 +21,7 @@ import { OrchestrationService } from './queue/orchestration.service';
 import { TranscribeProcessor } from './transcribe/transcribe.processor';
 import { ClassificationProcessor } from './classify/classify.processor';
 import { TokenClassificationProcessor } from './classify/token.classification.processor';
+import { CategoryClassificationProcessor } from './classify/category.classification.processor';
 import { CategoryUpdateResolverProcessor } from './category/category.update.processor';
 
 const {
@@ -90,6 +91,7 @@ const {
     TranscribeProcessor,
     ClassificationProcessor,
     TokenClassificationProcessor,
+    CategoryClassificationProcessor,
     CategoryUpdateResolverProcessor,
     FileService,
     CallService,
