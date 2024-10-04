@@ -2,7 +2,7 @@ version: '3.8'
 services:
   app:
     container_name: 2336_devchalenge_21-api
-    restart: always
+    restart: never
     build:
       context: ./
       dockerfile: Dockerfile
@@ -24,7 +24,7 @@ services:
   cache:
     image: redis:7.4-alpine
     container_name: 2336_devchalenge_21-redis
-    restart: always
+    restart: never 
     ports:
       - '6379:6379'
     command: redis-server
@@ -34,14 +34,14 @@ services:
   database:
     image: mongo:7.0
     container_name: 2336_devchalenge_21-mongodb
-    restart: always
+    restart: never
     volumes:
       - './data:/data/db'
 
   whisper:
     image: onerahmet/openai-whisper-asr-webservice:latest
     container_name: 2336_devchalenge_21-whisper
-    restart: always
+    restart: never
     environment:
       ASR_MODEL: base.en
       ASR_ENGINE: openai_whisper
