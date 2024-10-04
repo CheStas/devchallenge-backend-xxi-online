@@ -47,6 +47,8 @@ export class CategoryService implements OnApplicationBootstrap {
       title: categoryData.title.trim(),
       points: categoryData.points,
     });
+
+    this.orchestrationService.emitCategoryAddedEvent({ categoryId: result.id });
     return result;
   }
 
@@ -59,6 +61,9 @@ export class CategoryService implements OnApplicationBootstrap {
       return null;
     }
 
+    this.orchestrationService.emitCategoryUpdatedEvent({
+      categoryId: result.id,
+    });
     return {
       id: result.id,
       title: result.title,
@@ -73,6 +78,9 @@ export class CategoryService implements OnApplicationBootstrap {
       return null;
     }
 
+    this.orchestrationService.emitCategoryDeletedEvent({
+      categoryId: result.id,
+    });
     return {
       id: result.id,
       title: result.title,
