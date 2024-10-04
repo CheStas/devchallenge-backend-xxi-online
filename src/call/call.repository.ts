@@ -37,4 +37,8 @@ export class CallRepository {
       )
       .exec();
   }
+
+  async getAll(): Promise<Call[]> {
+    return await this.callModel.find().exec();
+  }
 }

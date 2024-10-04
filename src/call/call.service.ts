@@ -84,4 +84,8 @@ export class CallService {
   async update(id: string, updateData: Partial<Call>): Promise<Call | null> {
     return this.callRepository.update(id, updateData);
   }
+
+  async getAll(): Promise<Call[]> {
+    return this.callRepository.getAll();
+  }
 }
