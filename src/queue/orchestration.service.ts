@@ -35,6 +35,12 @@ export class OrchestrationService {
     });
   }
 
+  async sendCategoryClassifyCommand({ callId }: { callId: string }) {
+    await this.categoryClassifyQueue.add(commands.CATEGORY_CLASSIFY_TEXT, {
+      callId,
+    });
+  }
+
   async emitTextTokenizedEvent({ callId }: { callId: string }) {
     this.logger.log(`File Tokenized ${callId}`);
   }
