@@ -15,6 +15,8 @@ export class OrchestrationService {
     private readonly tokenizeQueue: Queue,
     @InjectQueue(commands.CATEGORY_CLASSIFY_TEXT)
     private readonly categoryClassifyQueue: Queue,
+    @InjectQueue(commands.CATEGORY_UPDATE_RESOLVE)
+    private readonly categoryUpdateResolveQueue: Queue,
   ) {}
 
   async emitCallUploadedEvent({ callId }: { callId: string }) {
@@ -50,6 +52,12 @@ export class OrchestrationService {
     // Get all calls, for each call
     // - remove current category (or just set status in progress?)
     // - emit send CATEGORY_CLASSIFY_TEXT command
+    await this.categoryUpdateResolveQueue.add(
+      commands.CATEGORY_UPDATE_RESOLVE,
+      {
+        categoryId,
+      },
+    );
   }
 
   async emitCategoryUpdatedEvent({ categoryId }: { categoryId: string }) {
@@ -57,6 +65,12 @@ export class OrchestrationService {
     // Get all calls, for each call
     // - remove current category (or just set status in progress?)
     // - emit send CATEGORY_CLASSIFY_TEXT command
+    await this.categoryUpdateResolveQueue.add(
+      commands.CATEGORY_UPDATE_RESOLVE,
+      {
+        categoryId,
+      },
+    );
   }
 
   async emitCategoryDeletedEvent({ categoryId }: { categoryId: string }) {
@@ -64,5 +78,11 @@ export class OrchestrationService {
     // Get all calls, for each call
     // - remove current category (or just set status in progress?)
     // - emit send CATEGORY_CLASSIFY_TEXT command
+    await this.categoryUpdateResolveQueue.add(
+      commands.CATEGORY_UPDATE_RESOLVE,
+      {
+        categoryId,
+      },
+    );
   }
 }

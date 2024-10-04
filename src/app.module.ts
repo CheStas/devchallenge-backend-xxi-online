@@ -40,6 +40,7 @@ const {
     BullModule.registerQueue({ name: commands.CLASSIFY_TEXT }),
     BullModule.registerQueue({ name: commands.TOKENIZE_TEXT }),
     BullModule.registerQueue({ name: commands.CATEGORY_CLASSIFY_TEXT }),
+    BullModule.registerQueue({ name: commands.CATEGORY_UPDATE_RESOLVE }),
     BullBoardModule.forRoot({
       route: '/admin/queues',
       adapter: ExpressAdapter,
@@ -58,6 +59,10 @@ const {
     }),
     BullBoardModule.forFeature({
       name: commands.CATEGORY_CLASSIFY_TEXT,
+      adapter: BullMQAdapter,
+    }),
+    BullBoardModule.forFeature({
+      name: commands.CATEGORY_UPDATE_RESOLVE,
       adapter: BullMQAdapter,
     }),
     MongooseModule.forRoot(DATABASE_URI),
