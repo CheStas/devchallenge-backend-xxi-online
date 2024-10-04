@@ -33,6 +33,8 @@ services:
   database:
     image: mongo:7.0
     container_name: 2336_devchalenge_21-mongodb
+    ports:
+      - '27017:27017'
     volumes:
       - './data:/data/db'
 
