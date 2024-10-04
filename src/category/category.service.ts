@@ -36,6 +36,10 @@ export class CategoryService implements OnApplicationBootstrap {
     }));
   }
 
+  async getAllRaw(): Promise<Category[]> {
+    return await this.callRepository.getAll();
+  }
+
   async create(categoryData: CreateCategoryDto): Promise<Category> {
     const uuid = uuidv4();
     const result = await this.callRepository.create({
