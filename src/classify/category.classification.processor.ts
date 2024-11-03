@@ -51,6 +51,7 @@ export class CategoryClassificationProcessor extends WorkerHost {
     log(`Category Classified , ${JSON.stringify(result, null, 2)}}`);
 
     const categoriesToSet =
+      // TODO filter by weigt!!
       result?.labels?.map((label) => {
         return categories.find((category) => category.title === label);
       }) || [];
